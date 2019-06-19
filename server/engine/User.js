@@ -38,10 +38,10 @@ class User extends EventConsumer {
 	enter(id) {
 		if (this.room)
 			throw new Error('You may not create a room in your current state (you absolute mess!)');
-		if (!Room.all.has(id))
+		if (!lobby.rooms.has(id))
 			throw new Error('Cannot find room');
 
-		const room = Room.all.get(id);
+		const room = lobby.rooms.get(id);
 		if (room.game)
 			throw new Error('Game has already started');
 		if (room.players.length >= room.rules.size)

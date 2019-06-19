@@ -4,9 +4,10 @@
   "description": "Precedent game engine",
   "main": "src/index.native.js",
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start": "node node_modules/react-native/local-cli/cli start",
     "server": "node server",
-    "client": "node scripts/start.js"
+    "client": "node scripts/start",
+    "build": "node scripts/build"
   },
   "rnpm": {
     "assets": [
