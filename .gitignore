@@ -55,20 +55,19 @@ buck-out/
 # Bundle artifact
 *.jsbundle
 
-android/
-ios/
-assets/
-config/
-scripts/
-src/
-.buckconfig
-.flowconfig
-.watchmanconfig
-app.json
-babel.config.js
-index.js
-metro.config.js
-yarn.lock
-.gitattributes
-__tests__/
-
+/android/
+/ios/
+/assets/
+/config/
+/scripts/
+/src/
+/.buckconfig
+/.flowconfig
+/.watchmanconfig
+/app.json
+/babel.config.js
+/index.js
+/metro.config.js
+/yarn.lock
+/.gitattributes
+/__tests__/
