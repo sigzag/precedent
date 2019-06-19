@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css?family=Bungee');
+
+scene, scene * { line-height: 1em; position: absolute; margin: 0; transform-style: preserve-3d; left: 50%; top: 50%; transform: translate(-50%, -50%); /* transition: transform 1s; */ }
+html, body { width: 100%; height: 100%; }
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	background: rgb(234, 234, 219);
+	font-family: Bungee;
+	color: rgb(255, 36, 0);
+	line-height: 3rem;
+}
+scene {
+	perspective: 400px;
+	perspective-origin: 50% 50%;
+	transform: translate(50% 50%);
+	width: 1px; height: 1px;
+}
+
+lobby {
+	width: 50%;
+}
+#room-list, input, game, chat, #user-name {
+	background: white;
+	/*border-radius: 10px;*/
+	padding: 10px;
+	border: none;
+	font-size: 18px;
+	display: block;
+	outline: none;
+}
+form {
+	display: flex;
+	flex-direction: column;
+}
+
+room { display: flex; }
+room span { flex: 1; }
+room span:last-child { flex: .2; }
+
+line, linex, liney, linez { background: blue; height: 10px; width: 100px; position: absolute; }
+
+gameboard { width: 500px; height: 500px; background: forestgreen; border-radius: 250px; display: block; }
+
+
+avatar {
+	width: 300px;
+	height: 300px;
+	border-radius: 7px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position-x: center;
+}
+avatar:nth-of-type(2) {
+	background-image: url("https://cdn.glitch.com/4f89742a-7070-4db9-87d0-1a0ef11348b0%2Fdark.png?1530299524848");
+}
+avatar:nth-of-type(3) {
+	background-image: url("https://cdn.glitch.com/4f89742a-7070-4db9-87d0-1a0ef11348b0%2FClippy.png?1530299525022");
+}
+avatar:nth-of-type(4) {
+	background-image: url("https://cdn.glitch.com/4f89742a-7070-4db9-87d0-1a0ef11348b0%2Fwinnie.png?1530299524955");
+}
+
+piece-me, piece-ai {
+	width: 40px;
+	height: 40px;
+	border-radius: 14px;
+	border: 1px solid black;
+	pointer-events: none;
+}
+piece-me { background: red; }
+piece-ai { background: blue; }
+
+board {
+	width: 400px;
+	height: 100px;
+	background: brown;
+}
+tile {
+	width: 50px;
+	height: 50px;
+	border: 1px solid black;
+	box-sizing: border-box;
+}
+
+#react-root {
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+	min-width: 25rem;
+}
+
+input,
+select,
+button {
+	font-size: 1.5rem;
+}
+form input,
+form select,
+form button {
+	margin-bottom: .5rem;
+}
+
+button {
+	background: white;
+	border: none;
+	/*border-radius: 10px;*/
+	background: rgb(255, 36, 0);
+	color: rgb(234, 234, 219);
+	font-family: Bungee;
+	padding: .25rem .5rem;
+	border-width: 0px 4px 3px 0px;
+	transition: transform 300ms;
+	outline: none;
+}
+button:active {
+	transform: translateY(2px);
+}
+
+/* CARD */
+
+card {
+	width: 50px;
+	height: 100px;
+	border-radius: 7px;
+}
+card.selected front,
+card.selected back {
+	border-color: dodgerblue;
+}
+card.active front,
+card.active back {
+	border-color: lime;
+}
+
+front,
+back {
+	width: 50px;
+	height: 100px;
+	border-radius: 7px;
+	backface-visibility: hidden;
+	border: 2px solid black;
+}
+
+back {
+	transform: translate(-50%, -50%) rotateY(180deg);
+	background: maroon;
+	background-image: url("https://bearlawyer.files.wordpress.com/2011/07/catandgirl1.jpg");
+    background-size: cover;
+    background-position-x: center;
+}
+front {
+	background: white;
+}
+
+suit {
+	font-size: 30px;
+	font-family: auto;
+}
+suit-small {
+	transform: none;
+	left: 5px;
+	top: 25px;
+	font-size: 20px;
+	font-family: auto;
+}
+number {
+	transform: none;
+	left: 5px;
+	top: 5px;
+	font-size: 20px;
+}
+
+/* COMPONENTS */
+
+.row,
+.column {
+	display: flex;
+	align-items: center;
+}
+
+.row { flex-direction: row; }
+.column { flex-direction: column; }
+
+/* CHAT */
+
+.chat {
+	background: white;
+	display: flex;
+	flex-direction: column-reverse;
+	height: 15rem;
+	overflow: hidden;
+	padding: .25rem;
+}
+.chat li {
+	list-style-type: none;
+	line-height: 1.5rem;
+}
+.message {
+	color: #26547C;
+	margin-left: .5rem;
+}
