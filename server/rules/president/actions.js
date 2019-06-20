@@ -12,4 +12,5 @@ module.exports = {
 	OR_NOTHING: 'OR_NOTHING',
 	SKIP: 'SKIP',
 	PASS: 'PASS',
+	NONE: 'NONE',
 };

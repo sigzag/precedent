@@ -39,11 +39,12 @@ function nextState(play, state) {
 				legal: null,
 				passed: Array(state.size).fill(false),
 				orNothing: false,
+				revolution: false,
 			};
 		case REVOLUTION:
 			return {
 				...state,
-				revolution: true,
+				revolution: !state.revolution,
 			};
 		case OR_NOTHING:
 			return {
@@ -57,21 +58,13 @@ function nextState(play, state) {
 				...state,
 				turn: state.turn + 1,
 				plays: [play, ...state.plays],
-				player: (state.turn + 1) % state.size,
+				player: state.turn % state.size,
 				legal: null,
 				orNothing: false,
 			};
 		case PASS:
 			if (!state.plays.length)
 				throw new Error('Invalid play!');
-			if (
-				!getCurrent(state.hands, state.turn).length || // if the player already finished
-				getCurrent(state.passed, state.turn) // or already passed
-			)
-				return {
-					...state,
-					turn: state.turn + 1,
-				};
 			return {
 				...state,
 				turn: state.turn + 1,
@@ -79,6 +72,11 @@ function nextState(play, state) {
 				legal: null,
 				passed: updateCurrent(state.passed, state.turn, true),
 				orNothing: false,
+			};
+		case NONE:
+			return {
+				...state,
+				turn: state.turn + 1,
 			};
 		case PLAY:
 			return {

@@ -1,0 +1,5 @@
+{
+  "name": "precedent",
+  "displayName": "precedent",
+  "entryPoint": "src/index.native.js"
+}

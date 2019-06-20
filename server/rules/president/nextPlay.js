@@ -9,6 +9,7 @@ const {
 	OR_NOTHING,
 	SKIP,
 	PASS,
+	NONE,
 	PLAY,
 } = require('./actions');
 const {
@@ -40,8 +41,8 @@ function nextPlay(action, state) {
 	}
 
 	if (action === PLAY) {
-		if (!getCurrent(hands, turn).length)
-			return PASS;
+		if (!getCurrent(hands, turn).length || getCurrent(passed, turn))
+			return NONE;
 		if (legal && !legal.length && orNothing)
 			return SKIP;
 		if (legal && !legal.length)
