@@ -20,7 +20,7 @@ const {
 } = require('./util');
 
 function nextPlay(action, state) {
-	const { size, turn, player, plays, legal, hands, passed, ranks, orNothing } = state;
+	const { size, turn, player, plays, legal, hands, passed, ranks, orNothing, revolution } = state;
 
 	switch (action) {
 		case INIT: case SHUFFLE: return DEAL;
@@ -34,10 +34,12 @@ function nextPlay(action, state) {
 			return COMPLETE;
 		if (action.length === 4)
 			return REVOLUTION;
-		if (isFourOfAKind(plays) || isTrumpPlay(action))
+		if (isFourOfAKind(plays) || isTrumpPlay(action, revolution))
 			return START;
 		if (isOrNothing(plays))
 			return OR_NOTHING;
+	} else if (action === REVOLUTION && isTrumpPlay(plays[1], revolution)) {
+		return START;
 	}
 
 	if (action === PLAY) {

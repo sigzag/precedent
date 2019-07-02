@@ -11,7 +11,6 @@ export default function Hand({ size, room }) {
 			plays,
 			hands,
 			legal,
-			orNothing,
 		},
 	}, setRoom] = useState(room);
 	useSocket('room', setRoom);
@@ -20,11 +19,12 @@ export default function Hand({ size, room }) {
 
 	const [selected, setSelected] = useState([]);
 	useEffect(() => setSelected([]), [legal]);
-	const legalPlay = (legal || []).find((play) => equalPlays(play, selected));
 	// useEffect(() => setSelected((selected) => selected.length ? [] : selected), [legal]);
-	const selectable = (legal || []).filter(
+	const selectable = (legal || []).filter(Array.isArray).filter(
 		(play) => !selected.find((card) => !play.find((other) => equalCards(card, other)))
 	).flat();
+	const legalPlay = (legal || []).filter(Array.isArray).find((play) => equalPlays(play, selected));
+	const legalAction = legalPlay ? 'PLAY' : (legal || []).find((play) => !Array.isArray(play));
 
 	const [height, setHeight] = useState(50);
 
@@ -47,11 +47,7 @@ export default function Hand({ size, room }) {
 					);
 				})}
 			</Svg>
-			{legalPlay ? (
-				<Action style={styles.playAction} event="play" data={legalPlay}>play</Action>
-			) : (
-				<Action style={styles.playAction} event="play" data={orNothing ? 'SKIP' : 'PASS'}>{orNothing ? 'skip' : 'pass'}</Action>
-			)}
+			<Action style={styles.playAction} event="play" data={legalPlay || legalAction}>{legalAction}</Action>
 		</Row>
 	);
 }
@@ -80,7 +76,7 @@ function PlayerCard({ transforms = [], select, selected, ...props }) {
 
 function equalPlays(a, b) {
 	return (
-		a && b &&
+		Array.isArray(a) && Array.isArray(b) &&
 		a.length === b.length &&
 		!a.find((a) => !b.find((b) => equalCards(a, b)))
 	);

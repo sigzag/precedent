@@ -70,6 +70,20 @@
 	align-items: flex-end;
 	background: rgb(255, 36, 0);
 }
+.handsRow {
+	align-items: stretch;
+	background: rgba(255, 36, 0, .4);
+}
+.hand {
+	flex: 1;
+	border-top-width: 3px;
+	border-color: transparent;
+	padding: 0 .25rem;
+	overflow: hidden;
+}
+.activeHand {
+	border-color: dodgerblue;
+}
 
 /* CARD */
 
@@ -107,4 +121,17 @@
 }
 .info {
 	color: rgb(155, 155, 155);
+}
+
+.centered {
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+}
+.disabled {
+	filter: grayscale(80%);
+	opacity: .4;
+}
+.oneLine {
+	white-space: nowrap;
 }

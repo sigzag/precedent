@@ -9,6 +9,7 @@ const {
 	SKIP,
 	PASS,
 	PLAY,
+	NONE,
 } = require('./actions');
 const {
 	gen,
@@ -18,7 +19,10 @@ const {
 	singles,
 	getCurrent,
 	updateCurrent,
+	isThreeOfClubs,
+	isTrumpPlay,
 } = require('./util');
+const getLegalPlays = require('./getLegalPlays');
 
 function nextState(play, state) {
 	if (Array.isArray(play))
@@ -90,6 +94,17 @@ function nextState(play, state) {
 
 function nextPlayState(play, state) {
 	const hand = complement(getCurrent(state.hands, state.turn), play);
+	const rank =
+		hand.length
+			? null
+			: state.ranks
+				.filter((rank) => rank !== null)
+				.reduce((ranks, rank) => {
+					ranks[rank] = 1;
+					return ranks;
+				}, new Array(state.size).fill(0))
+				[isTrumpPlay(play, state.revolution) ? 'lastIndexOf' : 'indexOf'](0);
+
 	return {
 		...state,
 		plays: [play, ...state.plays],
@@ -97,14 +112,7 @@ function nextPlayState(play, state) {
 		player: state.turn % state.size,
 		legal: null,
 		hands: updateCurrent(state.hands, state.turn, hand),
-		ranks:
-			hand.length
-				? state.ranks
-				: updateCurrent(
-					state.ranks,
-					state.turn,
-					state.ranks.filter((rank) => rank !== null).reduce((m, rank) => Math.max(m, rank), -1) + 1,
-				),
+		ranks: updateCurrent(state.ranks, state.turn, rank),
 	};
 }
 
@@ -163,37 +171,6 @@ function defaultState(size, ranks) {
 		orNothing: false, // if current state is an or-nothing play
 		revolution: false, // if current round has experienced a revolution
 	};
-}
-
-function getLegalPlays({ turn, plays, hands, orNothing, revolution }) {
-	const hand = getCurrent(hands, turn);
-	const legal = hand.reduce((legal, card, i, hand) =>
-		legal.concat(
-			hand
-				.slice(i + 1)
-				.filter(({ n, s }) => card.n === n)
-				.reduce((sets, card) => sets.concat(sets.map((set) => set.concat(card))), [[card]])
-		)
-	, []);
-
-	if (hand.find(isThreeOfClubs))
-		return legal.filter((play) => play.find(isThreeOfClubs));
-	if (!plays.length)
-		return legal;
-
-	const lastPlay = plays.find(Array.isArray);
-
-	if (orNothing)
-		return legal
-			.filter((set) => set.length === lastPlay.length)
-			.filter((set) => set[0].n === lastPlay[0].n);
-	return legal
-		.filter((set) => set.length === lastPlay.length)
-		.filter((set) => revolution ? set[0].n <= lastPlay[0].n : set[0].n >= lastPlay[0].n);
-}
-
-function isThreeOfClubs(card) {
-	return card.n === 0 && card.s === 2;
 }
 
 module.exports = nextState;

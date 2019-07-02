@@ -12,7 +12,10 @@ export const socketContext = createContext();
 export const navigationContext = createContext();
 
 export default function App() {
-	const socket = useMemo(() => io('https://sigzag-precedent.glitch.me'), []);
+	const socket = useMemo(() => io(
+		// 'https://sigzag-precedent.glitch.me',
+		'http://localhost:4000',
+	), []);
 	const [navigationState, navigate] = useState({});
 
 	useEffect(() => {
@@ -25,9 +28,9 @@ export default function App() {
 				navigate({ screen: 'Room', data: { room } });
 		});
 
-		// socket.send('register', 'sig');
-		// socket.send('create', { name: 'game', players: 3 });
-		// socket.send('start');
+		socket.send('register', 'sig');
+		socket.send('create', { name: 'game', players: 3 });
+		socket.send('start');
 	}, [socket]);
 
 	return (

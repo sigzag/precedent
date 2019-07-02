@@ -6,9 +6,14 @@ const sort = (cards) => cards.sort((a, b) => a.n > b.n ? 1 : -1);
 const complement = (cards, other) => cards.filter((card) => !other.find(({ n, s }) => card.n === n && card.s === s));
 const singles = ({ cards }) => cards.filter((card) => !cards.find((other) => other !== card && other.n === card.n));
 
-function isTrumpPlay(play) {
-	return play[0].n === 12;
+function isThreeOfClubs(card) {
+	return card.n === 0 && card.s === 2;
 }
+
+function isTrumpPlay(play, revolution) {
+	return play[0].n === (revolution ? 0 : 12);
+}
+
 function isFourOfAKind(plays) {
 	const lastPlay = plays.find(Array.isArray);
 	return plays
@@ -46,6 +51,7 @@ module.exports = {
 	sort,
 	complement,
 	singles,
+	isThreeOfClubs,
 	isTrumpPlay,
 	isFourOfAKind,
 	isOrNothing,

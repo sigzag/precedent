@@ -3,7 +3,7 @@ const { SKIP, PASS } = require('./actions');
 function isLegalPlay(play, state) {
 	switch (play) {
 		case PASS:
-			return !!state.plays.length;
+			return !state.orNothing;
 		case SKIP:
 			return !!state.orNothing;
 		default:

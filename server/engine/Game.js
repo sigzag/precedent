@@ -42,7 +42,6 @@ class Game extends EventConsumer {
 			this.state = this.rules.nextState(play, this.state);
 			this.room.update();
 			play = this.rules.nextPlay(play, this.state);
-			console.log('intermediate', play);
 			if (this.lastPlay === PLAY && play === PLAY) {
 				if (this.current() instanceof AI)
 					play = this.rules.nextAIPlay(play, this.state);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Action, Header, Text, Play } from '../../components';
 import { MessageList, MessageInput } from '../../containers';
+import Hands from './Hands';
 import Hand from './Hand';
 import styles from '../../styles.css';
 
@@ -24,6 +25,7 @@ export default function Game({ room }) {
 				<Text style={styles.players}>{players.map(({ name }) => name).join(', ')}</Text>
 			</Row>
 			<MessageList />
+			<Hands room={room} />
 			<Hand room={room} size={Math.ceil(52 / size)} />
 			<MessageInput />
 		</>

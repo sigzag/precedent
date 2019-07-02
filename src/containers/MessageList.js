@@ -16,7 +16,7 @@ export default function MessagesList() {
 		const hand = game.hands[player];
 		const cards = Array.isArray(hand) ? hand.length : hand;
 
-		if (['OR_NOTHING', 'REVOLUTION'].includes(game.play)) {
+		if (['OR_NOTHING', 'REVOLUTION', 'START'].includes(game.play)) {
 			setMessages((messages) => [{ id: id++, message: game.play, type: 'event' }, ...messages]);
 		} else if (['PASS', 'SKIP'].includes(game.play)) {
 			setMessages((messages) => [{ id: id++, message: game.play, type: 'event', user, cards }, ...messages]);
